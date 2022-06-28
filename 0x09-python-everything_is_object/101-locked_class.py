@@ -2,11 +2,6 @@
 """
 Module for a class that prevents dynamic attributes creation
 """
-
-class LockedClass():
+class LockedClass(object):
     """Class to prevent dynamic attributes creation"""
-    __slots__ = ['first_name']
-
-    def __init__(self):
-        """Init method"""
-        pass
+    __slots__ = 'first_name'

@@ -1,23 +1,49 @@
 #!/usr/bin/python3
-"""Student class defines a student"""
+"""Documentation for a Student class"""
 
 
 class Student:
-    """defines a student"""
+
+    """The Student class"""
+
     def __init__(self, first_name, last_name, age):
-        """instantiation"""
+        """Instatiation function for Student class
+        Args:
+            first_name (str): the first name of the student
+            last_name (str): the last name of the student
+            age (int): the age of the student
+        """
+
         self.first_name = first_name
         self.last_name = last_name
         self.age = age
 
     def to_json(self, attrs=None):
-        """retrieves a dictionary representation of
-        Student instance"""
-        if type(attrs) == list and all(type(elem) == str for elem in attrs):
-            return {k: getattr(self, k) for k in attrs if hasattr(self, k)}
-        return self.__dict__
+        """Returns the dictionary representation of the object
+        Args:
+            attrs (list): the attributes to include in the dictionary
+        Returns:
+            A dictionary representation of the object
+        """
+
+        if not isinstance(attrs, list):
+            return self.__dict__
+        for var in attrs:
+            if not isinstance(var, str):
+                return self.__dict__
+        string_dict = {}
+        for string in attrs:
+            if string in self.__dict__.keys():
+                string_dict[string] = self.__dict__[string]
+        return string_dict
 
     def reload_from_json(self, json):
-        """replaces all attributes of the student instance"""
-        for key, value in json.items():
-            setattr(self, key, value) 
+        """Replaces the attributes in the instance
+        Args:
+            json (dict): a dictionary of values to replace
+        """
+
+        keys = list(json.keys())
+        for key in keys:
+            if key in self.__dict__.keys():
+                self.__dict__[key] = json[key] 
